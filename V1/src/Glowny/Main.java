@@ -13,15 +13,19 @@ public class Main
 	{
 		boolean flag = false;
 		String hello = "Hello World!";
-		String userInput[] = new String[3];
+		String userInput[] = new String[4];
 		Scanner scan = new Scanner(System.in);
+		CallBackImpl callBack = new CallBackImpl();
+		
 		
 		System.out.println("Podaj nazwe pliku");
-		userInput[0] = scan.nextLine();
-		System.out.println("Podaj str1");
 		userInput[1] = scan.nextLine();
-		System.out.println("Podaj str2");
+		System.out.println("Podaj str1");
 		userInput[2] = scan.nextLine();
+		System.out.println("Podaj str2");
+		userInput[3] = scan.nextLine();
+		
+		
 		
 		try
 		{
@@ -44,6 +48,6 @@ public class Main
 			e.printStackTrace();
 		}	
 		
-		//callBack.methodToCallBack(flag);
+		callBack.methodToCallBack(flag);
 	}
 }
