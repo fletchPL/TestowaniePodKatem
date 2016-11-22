@@ -10,11 +10,38 @@ public class Main
 {
 	public static void main(String[] args)
 	{
+		
+		/*----------------------- 
+			public class ShutdownHookDemo {
+			    public void start() {
+			        System.out.println("Demo");
+			        ShutdownHook shutdownHook = new ShutdownHook();
+			        Runtime.getRuntime().addShutdownHook(shutdownHook);
+			    }
+			
+			    public static void main(String[] args) {
+			        ShutdownHookDemo demo = new ShutdownHookDemo();
+			        demo.start();
+			        try {
+			            System.in.read();
+			        }
+			        catch(Exception e) {
+			        }
+			    }
+			}
+			
+			class ShutdownHook extends Thread {
+			    public void run() {
+			        System.out.println("Shutting down");
+			    }
+			}
+		--------------------------- */
+		
 		boolean flag = false;
 		String hello = "Hello World!";
 		String userInput[] = new String[4];
 		Scanner scan = new Scanner(System.in);
-		//CallBackImpl callBack = new CallBackImpl();
+		CallBackImpl callBack = new CallBackImpl();
 		
 		System.out.println("Podaj nazwe pliku");
 		userInput[1] = scan.nextLine();
@@ -43,6 +70,17 @@ public class Main
 			flag = false;
 			e.printStackTrace();
 		}	
-		//callBack.methodToCallBack(flag);
+		
+		if(flag)
+		{
+			final boolean flagg = flag;
+		    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() 
+		    {
+		        public void run() 
+		        {
+		    		callBack.methodToCallBack(flagg);
+		        }
+		    }, "Shutdown-thread"));
+		}
 	}
 }
