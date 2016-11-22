@@ -8,15 +8,13 @@ import java.util.Scanner;
 
 public class Main 
 {
-	
 	public static void main(String[] args)
 	{
 		boolean flag = false;
 		String hello = "Hello World!";
 		String userInput[] = new String[4];
 		Scanner scan = new Scanner(System.in);
-		CallBackImpl callBack = new CallBackImpl();
-		
+		//CallBackImpl callBack = new CallBackImpl();
 		
 		System.out.println("Podaj nazwe pliku");
 		userInput[1] = scan.nextLine();
@@ -24,9 +22,7 @@ public class Main
 		userInput[2] = scan.nextLine();
 		System.out.println("Podaj str2");
 		userInput[3] = scan.nextLine();
-		
-		
-		
+				
 		try
 		{
 			File file = new File(userInput[1]);
@@ -47,7 +43,6 @@ public class Main
 			flag = false;
 			e.printStackTrace();
 		}	
-		
-		callBack.methodToCallBack(flag);
+		//callBack.methodToCallBack(flag);
 	}
 }
