@@ -38,7 +38,7 @@ public class CallBackImpl implements CallBack
 		if(wynik)
 		{
 			System.out.println("wanna change your path Y/N?");
-			userInput = scan.nextLine();
+			userInput = scan.nextLine().toLowerCase();
 			if(userInput.equals(y.toLowerCase()))
 			{
 				System.out.println("Write a new Path");
@@ -63,7 +63,7 @@ public class CallBackImpl implements CallBack
 		{
 			System.out.println("plik nie zostal zapisany");
 		}
-		
+		scan.close();//add
 		return userInput;
 	}
 }
