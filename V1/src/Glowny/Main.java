@@ -4,17 +4,31 @@ import java.util.Scanner;
 
 public class Main 
 {
+	static class CallCallBack extends Thread 
+	{
+	   public void run() 
+	   {
+		   CallBackTwoImpl callBackTwo = new CallBackTwoImpl();
+		   callBackTwo.CallBackToCallBack(cStr);
+	   }
+	}
+	public static final String[] cStr = new String[3]; 
+	
 	public static void main(String[] args)
 	{
 		CallBackImpl callBack = new CallBackImpl();
-		CallBackTwoImpl callBackTwo = new CallBackTwoImpl();
 		FileOperations fOp = new FileOperations();
+		
 		String str[] = new String[3];
 		
 		Scanner scan = new Scanner(System.in);
 		String answer = "";
-			
-		while(true)
+		
+		boolean flag = true;
+		
+		Runtime.getRuntime().addShutdownHook(new CallCallBack());
+		
+		while(flag)
 		{
 			System.out.println("Co chcesz zrobiæ?\n1-Podaj dane\n2-Zapisz plik\n3-Wyjdz");
 			answer = scan.nextLine();
@@ -22,6 +36,9 @@ public class Main
 			{
 				case "1" :	System.out.println("Wybrales opcje 1");
 							str = GetData();
+							cStr[0] = str[0];
+							cStr[1] = str[1];
+							cStr[2] = str[2];
 							break;
 							
 				case "2" :	System.out.println("Wybrales opcje 2");
@@ -31,21 +48,20 @@ public class Main
 								System.out.println("Najpierw musisz podaæ dane");
 							}
 							else
-							{
+							{							
 								fOp.SaveFile(str, callBack);
 							}
 							break;
 							
 				case "3" :	System.out.println("Wybrales opcje 3");
-							callBackTwo.CallBackToCallBack(str);
-							System.exit(1);
+							flag = false;
 							break;
 					
 				default  : 	break;
 			}
 		}
 	}
-	
+
 	public static String[] GetData()
 	{
 		String userData[] = new String[3];
