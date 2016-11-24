@@ -1,86 +1,85 @@
 package Glowny;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main 
 {
 	public static void main(String[] args)
 	{
+		CallBackImpl callBack = new CallBackImpl();
+		FileOperations fOp = new FileOperations();
+		String str[] = new String[3];
 		
-		/*----------------------- 
-			public class ShutdownHookDemo {
-			    public void start() {
-			        System.out.println("Demo");
-			        ShutdownHook shutdownHook = new ShutdownHook();
-			        Runtime.getRuntime().addShutdownHook(shutdownHook);
-			    }
-			
-			    public static void main(String[] args) {
-			        ShutdownHookDemo demo = new ShutdownHookDemo();
-			        demo.start();
-			        try {
-			            System.in.read();
-			        }
-			        catch(Exception e) {
-			        }
-			    }
-			}
-			
-			class ShutdownHook extends Thread {
-			    public void run() {
-			        System.out.println("Shutting down");
-			    }
-			}
-		--------------------------- */
+		Scanner scan = new Scanner(System.in);
+		String answer = "";
 		
 		boolean flag = false;
-		String hello = "Hello World!";
-		String userInput[] = new String[4];
+		
+		while(true)
+		{
+			System.out.println("Co chcesz zrobiæ?\n1-Podaj dane\n2-Zapisz plik\n3-Wyjdz");
+			answer = scan.nextLine();
+			switch(answer)
+			{
+				case "1" :	System.out.println("Wybrales opcje 1");
+							str = GetData();
+							flag = false;
+							break;
+							
+				case "2" :	System.out.println("Wybrales opcje 2");
+							if(str.equals(null) || str.equals(""))
+							{
+								System.out.println("Najpierw musisz podaæ dane");
+								flag = false;
+							}
+							else
+							{
+								fOp.SaveFile(str, callBack);
+								flag = true;
+							}
+							break;
+							
+				case "3" :	System.out.println("Wybrales opcje 3");
+							callBack.methodToCallBack(flag);
+							System.exit(1);
+							break;
+					
+				default  : 	break;
+			}
+		}
+	}
+	
+	public static String[] GetData()
+	{
+		String userData[] = new String[3];
+		
 		Scanner scan = new Scanner(System.in);
-		CallBackImpl callBack = new CallBackImpl();
 		
-		System.out.println("Podaj nazwe pliku");
-		userInput[1] = scan.nextLine();
-		System.out.println("Podaj str1");
-		userInput[2] = scan.nextLine();
-		System.out.println("Podaj str2");
-		userInput[3] = scan.nextLine();
-				
-		try
+		while(true)
 		{
-			File file = new File(userInput[1]);
-			FileWriter fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			bw.write(hello);
-			bw.close();
-			
-			flag = true;
-			
-			System.out.println("result : " + userInput[2]);
-			
+			System.out.println("Podaj nazwe pliku");
+			userData[0] = scan.nextLine();
+			if(userData[0].endsWith(".txt"))
+			{
+				break;
+			}
+			else
+			{
+				System.out.println("Podaj œcie¿kê do pliku o rozszerzeniu '.txt'");
+			}
 		}
-		catch(IOException e)
-		{
-			System.out.println("result : " +userInput[3]);
-			flag = false;
-			e.printStackTrace();
-		}	
+
+		System.out.println("Podaj 'poprawny' ciag znakow");
+		userData[1] = scan.nextLine();
 		
-		if(flag)
+		System.out.println("Podaj 'niepoprawny' ciag znakow");
+		userData[2] = scan.nextLine();
+		
+
+		if(!scan.hasNextLine())
 		{
-			final boolean flagg = flag;
-		    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() 
-		    {
-		        public void run() 
-		        {
-		    		callBack.methodToCallBack(flagg);
-		        }
-		    }, "Shutdown-thread"));
+			scan.close();
 		}
+		return userData;
 	}
 }
