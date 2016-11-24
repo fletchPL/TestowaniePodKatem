@@ -1,69 +1,49 @@
 package Glowny;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CallBackImpl implements CallBack
 {
-	
-	private static String y = "y";
-	static String hello = "hello World";
-	public void SaveFile(Path path)
-	{
-		try
-		{
-			File filee = new File(path + "\\file.txt");
-			
-			FileWriter fw = new FileWriter(filee);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			bw.write(hello);
-			bw.close();
-		}catch(IOException e)
-		{
-			System.out.println("zapisywanie nie powiodlo sie callback");
-		}
-	}
 	@Override
 	public String methodToCallBack(boolean wynik) 
 	{
 		Scanner scan = new Scanner(System.in);
-		String userInput = "";
+		String option = "";
+		String path = "";
+		boolean flag = true;
 		if(wynik)
 		{
-			System.out.println("wanna change your path Y/N?");
-			userInput = scan.nextLine().toLowerCase();
-			if(userInput.equals(y.toLowerCase()))
+			while(flag)
 			{
-				System.out.println("Write a new Path");
-				userInput = scan.nextLine();
-				Path path = Paths.get(userInput);
-				if(Files.exists(path))
+				System.out.println("Chcesz zmienic sciezkie pliku?\n1 - Tak\n2 - Nie");
+				option = scan.nextLine();
+				switch(option)
 				{
-					System.out.println("Path exist");
-					System.out.println(path);
-					SaveFile(path);
-					
-				}else {
-					System.out.println("wrong path");
+					case "1" :	System.out.println("Wybrales zmiane sciezki.\nPodaj nowa sciezke:");
+								path = scan.nextLine();
+								if(path.endsWith(".txt"))
+								{
+									System.out.println("Plik zostal zapisany w nowej sciezce: " + path);
+									flag = false;
+								}
+								else
+								{
+									System.out.println("Plik w podanej sciezce nie ma rozszerzenia txt");
+								}					
+								break;
+					case "2" :	System.out.println("Wybrales zachowanie aktualniej sciezki. Zegnaj");
+								flag = false;
+								break;
+					default  :  flag = false;
+								break;				
 				}
 			}
-			else 
-			{
-				System.out.println("nie wybrales opcji zmiany sciezki");
-			}
 		}
-		else if(!wynik)
+		else
 		{
 			System.out.println("plik nie zostal zapisany");
 		}
-		scan.close();//add
-		return userInput;
+		
+		return path;
 	}
 }
