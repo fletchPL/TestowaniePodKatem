@@ -7,14 +7,13 @@ public class Main
 	public static void main(String[] args)
 	{
 		CallBackImpl callBack = new CallBackImpl();
+		CallBackTwoImpl callBackTwo = new CallBackTwoImpl();
 		FileOperations fOp = new FileOperations();
 		String str[] = new String[3];
 		
 		Scanner scan = new Scanner(System.in);
 		String answer = "";
-		
-		boolean flag = false;
-		
+			
 		while(true)
 		{
 			System.out.println("Co chcesz zrobiæ?\n1-Podaj dane\n2-Zapisz plik\n3-Wyjdz");
@@ -23,24 +22,21 @@ public class Main
 			{
 				case "1" :	System.out.println("Wybrales opcje 1");
 							str = GetData();
-							flag = false;
 							break;
 							
 				case "2" :	System.out.println("Wybrales opcje 2");
 							if(str.equals(null) || str.equals(""))
 							{
 								System.out.println("Najpierw musisz podaæ dane");
-								flag = false;
 							}
 							else
 							{
 								fOp.SaveFile(str, callBack);
-								flag = true;
 							}
 							break;
 							
 				case "3" :	System.out.println("Wybrales opcje 3");
-							callBack.methodToCallBack(flag);
+							callBackTwo.CallBackToCallBack(str);
 							System.exit(1);
 							break;
 					
