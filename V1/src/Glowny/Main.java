@@ -25,7 +25,8 @@ public class Main
 							break;
 							
 				case "2" :	System.out.println("Wybrales opcje 2");
-							if(str.equals(null) || str.equals(""))
+				
+							if(str[0] == null || str[0].equals(""))
 							{
 								System.out.println("Najpierw musisz podaæ dane");
 							}
